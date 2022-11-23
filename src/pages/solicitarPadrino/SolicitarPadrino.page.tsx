@@ -6,7 +6,7 @@ import { FormEnums, RequestPadrinoForm } from "../../types/types";
 
 const useStyles = createStyles({
 	card: {
-		width: "50%",
+		width: "70%",
 	},
 });
 

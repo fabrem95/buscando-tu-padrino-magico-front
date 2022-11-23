@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Card, createStyles, Radio, TextInput } from "@mantine/core";
+import {
+	Card,
+	createStyles,
+	Group,
+	Radio,
+	Text,
+	TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { CrearPadrinoForm, FormEnums } from "../../types/types";
 import { FormEnumsService } from "../../api";
+import { SimpleGrid } from "@mantine/core";
 
 const useStyles = createStyles({
 	card: {
-		width: "50%",
+		width: "70%",
 	},
 });
 
@@ -30,6 +38,13 @@ const CrearPadrino = () => {
 		FetchFormEnums();
 	}, []);
 
+	const AuxForm = useForm({
+		initialValues: {
+			txtFavouriteSport: "",
+			txtRtcInitiationReason: "",
+		},
+	});
+
 	const CrearPadrinoForm = useForm<CrearPadrinoForm>({
 		initialValues: {
 			name: "",
@@ -48,72 +63,68 @@ const CrearPadrino = () => {
 	return (
 		<Card className={classes.card} shadow="sm" p="lg" radius="md" withBorder>
 			<form>
-				<TextInput
-					label="Nombre"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("name")}
-				/>
-				<TextInput
-					label="Apellido"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("lastName")}
-				/>
-				<Radio.Group
-					name="socialAptitudes"
-					label="Aptitudes Sociales"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("socialAptitudes")}
-					orientation="vertical"
-				>
-					{FormEnumsData?.socialAptitudes?.map((sa) => {
-						return <Radio value={sa.value} label={sa.label} />;
-					})}
-				</Radio.Group>
-				<Radio.Group
-					name="foodTaste"
-					label="Gustos en Comida"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("foodTaste")}
-					orientation="vertical"
-				>
-					{FormEnumsData?.foodTaste?.map((ft) => {
-						return <Radio value={ft.value} label={ft.label} />;
-					})}
-				</Radio.Group>
-				<Radio.Group
-					name="musicTaste"
-					label="Dime que escuchas y te dire como eres"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("musicTaste")}
-					orientation="vertical"
-				>
-					{FormEnumsData?.musicTaste?.map((mt) => {
-						return <Radio value={mt.value} label={mt.label} />;
-					})}
-				</Radio.Group>
-				<Radio.Group
-					name="hobbies"
-					label="Aficiones"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("hobbies")}
-					orientation="vertical"
-				>
-					{FormEnumsData?.hobbies?.map((h) => {
-						return <Radio value={h.value} label={h.label} />;
-					})}
-				</Radio.Group>
-				<TextInput
-					label="Deporte Favorito"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("favouriteSport")}
-				/>
-				<Radio.Group
-					name="emotional"
-					label="Emocional"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("emotional")}
-					orientation="vertical"
-				>
+				<SimpleGrid verticalSpacing={30}>
+					<TextInput
+						label="Nombre"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("name")}
+					/>
+					<TextInput
+						label="Apellido"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("lastName")}
+					/>
+					<Radio.Group
+						name="socialAptitudes"
+						label="Aptitudes Sociales"
+						withAsterisk
+						orientation="vertical"
+						{...CrearPadrinoForm.getInputProps("socialAptitudes")}
+					>
+						{FormEnumsData?.socialAptitudes?.map((sa, i) => {
+							return (
+								<Radio
+									key={`sa${i}`}
+									value={String(sa.value)}
+									label={sa.label}
+								/>
+							);
+						})}
+					</Radio.Group>
+					<Radio.Group
+						name="foodTaste"
+						label="Gustos en Comida"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("foodTaste")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.foodTaste?.map((ft, i) => {
+							return (
+								<Radio
+									key={`ft${i}`}
+									value={String(ft.value)}
+									label={ft.label}
+								/>
+							);
+						})}
+					</Radio.Group>
+					<Radio.Group
+						name="musicTaste"
+						label="Dime que escuchas y te dire como eres"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("musicTaste")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.musicTaste?.map((mt, i) => {
+							return (
+								<Radio
+									key={`mt${i}`}
+									value={String(mt.value)}
+									label={mt.label}
+								/>
+							);
+						})}
+					</Radio.Group>
 					<Radio.Group
 						name="hobbies"
 						label="Aficiones"
@@ -121,27 +132,98 @@ const CrearPadrino = () => {
 						{...CrearPadrinoForm.getInputProps("hobbies")}
 						orientation="vertical"
 					>
-						{FormEnumsData?.emotionals?.map((e) => {
-							return <Radio value={e.value} label={e.label} />;
+						{FormEnumsData?.hobbies?.map((h, i) => {
+							return (
+								<Radio key={`h${i}`} value={String(h.value)} label={h.label} />
+							);
 						})}
 					</Radio.Group>
-				</Radio.Group>
-				<TextInput
-					label="Razon de ingreso a Rotaract"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("rtcInitiationReason")}
-				/>
-				<Radio.Group
-					name="oddparentType"
-					label="Tipo de Padrino/Madrina"
-					withAsterisk
-					{...CrearPadrinoForm.getInputProps("oddparentType")}
-					orientation="vertical"
-				>
-					{FormEnumsData?.oddparentTypes?.map((opt) => {
-						return <Radio value={opt.value} label={opt.label} />;
-					})}
-				</Radio.Group>
+					<Radio.Group
+						name="favouriteSport"
+						label="Deporte Favorito"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("favouriteSport")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.favouriteSports?.map((fs, i) => {
+							return (
+								<Radio
+									key={`fs${i}`}
+									value={String(fs.value)}
+									label={fs.label}
+								/>
+							);
+						})}
+						<Radio
+							value={AuxForm.values.txtFavouriteSport}
+							label={
+								<TextInput
+									label="Otro"
+									// disabled={}
+									{...AuxForm.getInputProps("txtFavouriteSport")}
+								/>
+							}
+						/>
+					</Radio.Group>
+					<Radio.Group
+						name="emotional"
+						label="Emocional"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("emotional")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.emotionals?.map((e, i) => {
+							return (
+								<Radio key={`e${i}`} value={String(e.value)} label={e.label} />
+							);
+						})}
+					</Radio.Group>
+					<Radio.Group
+						name="rtcInitiationReasons"
+						label="Razon de ingreso a Rotaract"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("rtcInitiationReasons")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.rtcInitiationReasons?.map((rir, i) => {
+							return (
+								<Radio
+									key={`rir${i}`}
+									value={String(rir.value)}
+									label={rir.label}
+								/>
+							);
+						})}
+						<Radio
+							value={AuxForm.values.txtRtcInitiationReason}
+							label={
+								<Text span>
+									Otro
+									<TextInput
+										{...AuxForm.getInputProps("txtRtcInitiationReason")}
+									/>
+								</Text>
+							}
+						/>
+					</Radio.Group>
+					<Radio.Group
+						name="oddparentType"
+						label="Tipo de Padrino/Madrina"
+						withAsterisk
+						{...CrearPadrinoForm.getInputProps("oddparentType")}
+						orientation="vertical"
+					>
+						{FormEnumsData?.oddparentTypes?.map((opt, i) => {
+							return (
+								<Radio
+									key={`opt${i}`}
+									value={String(opt.value)}
+									label={opt.label}
+								/>
+							);
+						})}
+					</Radio.Group>
+				</SimpleGrid>
 			</form>
 		</Card>
 	);
