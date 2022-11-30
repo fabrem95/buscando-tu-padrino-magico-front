@@ -10,7 +10,12 @@ import {
 import { useForm } from "@mantine/form";
 import React, { useEffect, useState } from "react";
 import { FormEnumsService, RequestPadrinoService } from "../../api";
-import { FormEnums, RequestPadrinoForm } from "../../types/types";
+import AssignedPadrino from "../../components/solicitarPadrino/AssignedPadrino";
+import {
+	CrearPadrinoForm,
+	FormEnums,
+	RequestPadrinoForm,
+} from "../../types/types";
 
 const useStyles = createStyles({
 	card: {
@@ -23,6 +28,7 @@ const SolicitarPadrino = () => {
 
 	//Estados locales
 	const [FormEnumsData, setFormEnumsData] = useState<FormEnums>();
+	const [MatchedPadrino, setMatchedPadrino] = useState<CrearPadrinoForm>();
 
 	useEffect(() => {
 		const FetchFormEnums = async () => {
@@ -66,14 +72,16 @@ const SolicitarPadrino = () => {
 			const Answer = await RequestPadrinoService.single(values);
 
 			if (Answer) {
-				console.log(Answer);
+				setMatchedPadrino(Answer.data);
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	return (
+	return MatchedPadrino ? (
+		<AssignedPadrino padrino={MatchedPadrino} />
+	) : (
 		<Card className={classes.card} shadow="sm" p="lg" radius="md" withBorder>
 			<form
 				onSubmit={RequestPadrinoForm.onSubmit((values) => handleSubmit(values))}
