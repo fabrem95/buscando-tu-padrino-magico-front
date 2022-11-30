@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
+	Button,
 	Card,
 	createStyles,
 	Group,
 	Radio,
+	SimpleGrid,
 	Text,
 	TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { CrearPadrinoForm, FormEnums } from "../../types/types";
 import { FormEnumsService } from "../../api";
-import { SimpleGrid } from "@mantine/core";
 
 const useStyles = createStyles({
 	card: {
@@ -60,9 +61,22 @@ const CrearPadrino = () => {
 		},
 	});
 
+	const handleSubmit = (values: typeof CrearPadrinoForm.values) => {
+		for (const key in values) {
+			if (!isNaN(Number(values[key as keyof typeof values]))) {
+				values[key as keyof typeof values] = Number(
+					values[key as keyof typeof values]
+				);
+			}
+		}
+		console.log(values);
+	};
+
 	return (
 		<Card className={classes.card} shadow="sm" p="lg" radius="md" withBorder>
-			<form>
+			<form
+				onSubmit={CrearPadrinoForm.onSubmit((values) => handleSubmit(values))}
+			>
 				<SimpleGrid verticalSpacing={30}>
 					<TextInput
 						label="Nombre"
@@ -223,6 +237,9 @@ const CrearPadrino = () => {
 							);
 						})}
 					</Radio.Group>
+					<Group>
+						<Button type="submit">Guardar</Button>
+					</Group>
 				</SimpleGrid>
 			</form>
 		</Card>
