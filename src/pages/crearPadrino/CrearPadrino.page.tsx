@@ -10,8 +10,9 @@ import {
 	TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { CrearPadrinoForm, FormEnums } from "../../types/types";
+import { CrearPadrinoForm } from "../../types/padrinos";
 import { CreatePadrinoService, FormEnumsService } from "../../api";
+import { FormEnums } from "../../types/types";
 
 const useStyles = createStyles({
 	card: {

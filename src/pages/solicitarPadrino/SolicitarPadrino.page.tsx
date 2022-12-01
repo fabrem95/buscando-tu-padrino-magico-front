@@ -13,9 +13,10 @@ import { FormEnumsService, RequestPadrinoService } from "../../api";
 import AssignedPadrino from "../../components/solicitarPadrino/AssignedPadrino";
 import {
 	CrearPadrinoForm,
-	FormEnums,
+	Padrino,
 	RequestPadrinoForm,
-} from "../../types/types";
+} from "../../types/padrinos";
+import { FormEnums } from "../../types/types";
 
 const useStyles = createStyles({
 	card: {
@@ -28,7 +29,7 @@ const SolicitarPadrino = () => {
 
 	//Estados locales
 	const [FormEnumsData, setFormEnumsData] = useState<FormEnums>();
-	const [MatchedPadrino, setMatchedPadrino] = useState<CrearPadrinoForm>();
+	const [MatchedPadrino, setMatchedPadrino] = useState<Padrino>();
 
 	useEffect(() => {
 		const FetchFormEnums = async () => {

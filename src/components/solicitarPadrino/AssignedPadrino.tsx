@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Card, Group, Text, Image } from "@mantine/core";
-import { CrearPadrinoForm } from "../../types/types";
+import { CrearPadrinoForm, Padrino } from "../../types/padrinos";
 import { Link } from "react-router-dom";
 import RoutesApp from "../../routes/routes";
 
 type AssignedPadrinoProps = {
-	padrino: CrearPadrinoForm;
+	padrino: Padrino;
 };
 
 function AssignedPadrino({ padrino }: AssignedPadrinoProps) {
@@ -13,7 +13,7 @@ function AssignedPadrino({ padrino }: AssignedPadrinoProps) {
 		<Card withBorder>
 			<Card.Section>
 				<Image
-					src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+					src={padrino.img}
 					height={160}
 					alt={`Foto de ${padrino.name}`}
 				/>
