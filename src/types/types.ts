@@ -10,6 +10,7 @@ export type FormEnums = {
 };
 
 export type CrearPadrinoForm = {
+	id: number;
 	name: string | number;
 	lastName: string | number;
 	socialAptitudes: number | string;

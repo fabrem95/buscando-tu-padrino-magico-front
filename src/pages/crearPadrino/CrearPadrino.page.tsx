@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { CrearPadrinoForm, FormEnums } from "../../types/types";
-import { FormEnumsService } from "../../api";
+import { CreatePadrinoService, FormEnumsService } from "../../api";
 
 const useStyles = createStyles({
 	card: {
@@ -48,20 +48,21 @@ const CrearPadrino = () => {
 
 	const CrearPadrinoForm = useForm<CrearPadrinoForm>({
 		initialValues: {
+			id: 0,
 			name: "",
 			lastName: "",
 			socialAptitudes: 0,
 			foodTaste: 0,
 			musicTaste: 0,
 			hobbies: 0,
-			favouriteSport: "",
+			favouriteSport: 0,
 			emotional: 0,
-			rtcInitiationReason: "",
+			rtcInitiationReason: 0,
 			oddparentType: 0,
 		},
 	});
 
-	const handleSubmit = (values: typeof CrearPadrinoForm.values) => {
+	const handleSubmit = async (values: typeof CrearPadrinoForm.values) => {
 		for (const key in values) {
 			if (!isNaN(Number(values[key as keyof typeof values]))) {
 				values[key as keyof typeof values] = Number(
@@ -69,7 +70,12 @@ const CrearPadrino = () => {
 				);
 			}
 		}
-		console.log(values);
+
+		console.log(values)
+		const CreatePadrino = await CreatePadrinoService.single(values)
+
+		if (CreatePadrino)
+			console.log(CreatePadrino);
 	};
 
 	return (
