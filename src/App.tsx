@@ -11,7 +11,6 @@ import SolicitarPadrino from "./pages/solicitarPadrino/SolicitarPadrino.page";
 import "./App.css";
 
 function App() {
-	const [count, setCount] = useState(0);
 
 	return (
 		<BrowserRouter>

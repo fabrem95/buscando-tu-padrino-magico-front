@@ -3,6 +3,8 @@
 	height: 100%;
 	margin: 0;
 	padding: 2rem;
+	background-image: url("./assets/images/bg_oodparents.jpg");
+	background-repeat: no-repeat;
 
 	display: flex;
 	justify-content: center;
@@ -41,4 +43,8 @@
 
 .read-the-docs {
 	color: #888;
+}
+
+.app-container {
+	
 }
