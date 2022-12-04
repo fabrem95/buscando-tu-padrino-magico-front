@@ -2,12 +2,12 @@
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	padding: 2rem;
 	background-image: url("./assets/images/bg_oodparents.jpg");
 	background-repeat: no-repeat;
 
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .logo {

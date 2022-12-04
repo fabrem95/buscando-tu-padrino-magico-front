@@ -6,8 +6,18 @@ import RoutesApp from "../../routes/routes";
 const Home = () => {
 	return (
 		<Center>
-			<Card shadow="sm" p="lg" radius="md" withBorder>
-				<Title>Titulo</Title>
+			<Card
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				}}
+				shadow="sm"
+				p="lg"
+				radius="md"
+				withBorder
+			>
+				<Title order={4}>Academia de Padrinos</Title>
 				<SimpleGrid>
 					<Button component={Link} to={RoutesApp.CrearPerfilPadrino}>
 						Solicitar alitas y corona
