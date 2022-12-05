@@ -4,7 +4,7 @@ export type FormEnums = {
 	foodTaste: { value: number; label: string }[];
 	hobbies: { value: number; label: string }[];
 	musicTaste: { value: number; label: string }[];
-	oddparentTypes: { value: number; label: string }[];
+	oddparentTypes: { value: number; label: string; img: string }[];
 	rtcInitiationReasons: { value: number; label: string }[];
 	socialAptitudes: { value: number; label: string }[];
 };

@@ -1,5 +1,6 @@
 import {
 	Card,
+	Image,
 	TextInput,
 	Radio,
 	createStyles,
@@ -217,7 +218,17 @@ const SolicitarPadrino = () => {
 										<Radio
 											key={`opt${i}`}
 											value={String(opt.value)}
-											label={opt.label}
+											label={
+												<Group>
+													{opt.label}
+													<Image
+														width={100}
+														radius="md"
+														src={opt.img}
+														alt="Padrino Mágico"
+													/>
+												</Group>
+											}
 										/>
 									);
 								})}
