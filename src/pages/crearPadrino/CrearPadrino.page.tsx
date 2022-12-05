@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	Button,
 	Card,
@@ -12,8 +12,10 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { CrearPadrinoForm } from "../../types/padrinos";
-import { CreatePadrinoService, FormEnumsService } from "../../api";
+import { PadrinosService } from "../../api";
 import { FormEnums } from "../../types/types";
+import { FetchFormEnums } from "../../api/apiFormEnums";
+import { useQuery } from "react-query";
 
 const useStyles = createStyles({
 	card: {
@@ -28,19 +30,16 @@ const CrearPadrino = () => {
 	//Estados locales
 	const [FormEnumsData, setFormEnumsData] = useState<FormEnums>();
 
+	//Queries
+	const FormEnumsResp = useQuery("FormEnums", FetchFormEnums);
+
 	useEffect(() => {
-		const FetchFormEnums = async () => {
-			try {
-				const FormEnumsResp = await FormEnumsService.all();
-
-				if (FormEnumsResp) {
-					setFormEnumsData(FormEnumsResp.data);
-				}
-			} catch (error) {}
-		};
-
-		FetchFormEnums();
-	}, []);
+		if (FormEnumsResp.isSuccess) {
+			setFormEnumsData(FormEnumsResp.data);
+		} else if (FormEnumsResp.isError) {
+			console.log(FormEnumsResp.error);
+		}
+	}, [FormEnumsResp.isLoading]);
 
 	const AuxForm = useForm({
 		initialValues: {
@@ -75,7 +74,7 @@ const CrearPadrino = () => {
 		}
 
 		console.log(values);
-		const CreatePadrino = await CreatePadrinoService.single(values);
+		const CreatePadrino = await PadrinosService.create(values);
 
 		if (CreatePadrino) console.log(CreatePadrino);
 	};

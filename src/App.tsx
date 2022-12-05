@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import RoutesApp from "./routes/routes";
 
 //Componentes
@@ -10,19 +11,25 @@ import SolicitarPadrino from "./pages/solicitarPadrino/SolicitarPadrino.page";
 //Estilos
 import "./App.css";
 
-function App() {
+const queryClient = new QueryClient();
 
+function App() {
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path={RoutesApp.Home} element={<Home />} />
-				<Route path={RoutesApp.CrearPerfilPadrino} element={<CrearPadrino />} />
-				<Route
-					path={RoutesApp.SolicitarPadrino}
-					element={<SolicitarPadrino />}
-				/>
-			</Routes>
-		</BrowserRouter>
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<Routes>
+					<Route path={RoutesApp.Home} element={<Home />} />
+					<Route
+						path={RoutesApp.CrearPerfilPadrino}
+						element={<CrearPadrino />}
+					/>
+					<Route
+						path={RoutesApp.SolicitarPadrino}
+						element={<SolicitarPadrino />}
+					/>
+				</Routes>
+			</BrowserRouter>
+		</QueryClientProvider>
 	);
 }
 

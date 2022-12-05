@@ -1,6 +1,5 @@
-import React from "react";
 import { Button, Card, Group, Text, Image, createStyles } from "@mantine/core";
-import { CrearPadrinoForm, Padrino } from "../../types/padrinos";
+import { Padrino } from "../../types/padrinos";
 import { Link } from "react-router-dom";
 import RoutesApp from "../../routes/routes";
 

@@ -9,14 +9,13 @@ import {
 	ScrollArea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import React, { useEffect, useState } from "react";
-import { FormEnumsService, RequestPadrinoService } from "../../api";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { PadrinosService } from "../../api";
+import { FetchFormEnums } from "../../api/apiFormEnums";
+import { requestPadrino } from "../../api/apiPadrinos";
 import AssignedPadrino from "../../components/solicitarPadrino/AssignedPadrino";
-import {
-	CrearPadrinoForm,
-	Padrino,
-	RequestPadrinoForm,
-} from "../../types/padrinos";
+import { Padrino, RequestPadrinoForm } from "../../types/padrinos";
 import { FormEnums } from "../../types/types";
 
 const useStyles = createStyles({
@@ -33,19 +32,27 @@ const SolicitarPadrino = () => {
 	const [FormEnumsData, setFormEnumsData] = useState<FormEnums>();
 	const [MatchedPadrino, setMatchedPadrino] = useState<Padrino>();
 
+	//Queries
+	const FormEnumsResp = useQuery("FormEnums", FetchFormEnums);
+	const RequestPadrinoResp = useMutation((values: RequestPadrinoForm) =>
+		requestPadrino(values)
+	);
+
 	useEffect(() => {
-		const FetchFormEnums = async () => {
-			try {
-				const FormEnumsResp = await FormEnumsService.all();
+		if (FormEnumsResp.isSuccess) {
+			setFormEnumsData(FormEnumsResp.data);
+		} else if (FormEnumsResp.isError) {
+			console.log(FormEnumsResp.error);
+		}
+	}, [FormEnumsResp.isLoading]);
 
-				if (FormEnumsResp) {
-					setFormEnumsData(FormEnumsResp.data);
-				}
-			} catch (error) {}
-		};
-
-		FetchFormEnums();
-	}, []);
+	useEffect(() => {
+		if (RequestPadrinoResp.isSuccess) {
+			setMatchedPadrino(RequestPadrinoResp.data);
+		} else if (RequestPadrinoResp.isError) {
+			console.log(RequestPadrinoResp.error);
+		}
+	}, [RequestPadrinoResp.isLoading]);
 
 	const RequestPadrinoForm = useForm<RequestPadrinoForm>({
 		initialValues: {
@@ -72,11 +79,7 @@ const SolicitarPadrino = () => {
 				}
 			}
 
-			const Answer = await RequestPadrinoService.single(values);
-
-			if (Answer) {
-				setMatchedPadrino(Answer.data);
-			}
+			RequestPadrinoResp.mutate(values);
 		} catch (error) {
 			console.log(error);
 		}

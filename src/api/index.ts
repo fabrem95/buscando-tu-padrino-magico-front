@@ -1,5 +1,9 @@
 import { AxiosResponse } from "axios";
-import { CrearPadrinoForm, Padrino, RequestPadrinoForm } from "../types/padrinos";
+import {
+	CrearPadrinoForm,
+	Padrino,
+	RequestPadrinoForm,
+} from "../types/padrinos";
 import { get, post, put, destroy } from "./base";
 
 export const FormEnumsService = {
@@ -8,20 +12,12 @@ export const FormEnumsService = {
 	// create: async (params) => await post("/user", params),
 };
 
-export const CreatePadrinoService = {
-	single: async (
-		padrino: CrearPadrinoForm
-	): Promise<AxiosResponse> =>
+export const PadrinosService = {
+	create: async (padrino: CrearPadrinoForm): Promise<AxiosResponse> =>
 		await post("/createPadrino", padrino),
-	// single: async (id) => await get(`/user/${id}`),
-	// create: async (params) => await post("/user", params),
-};
-
-export const RequestPadrinoService = {
-	single: async (
+	request: async (
 		answer: RequestPadrinoForm
-	): Promise<AxiosResponse<Padrino>> =>
-		await post("/requestPadrino", answer),
+	): Promise<AxiosResponse<Padrino>> => await post("/requestPadrino", answer),
 	// single: async (id) => await get(`/user/${id}`),
 	// create: async (params) => await post("/user", params),
 };
